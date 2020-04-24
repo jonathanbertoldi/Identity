@@ -1,19 +1,19 @@
 ﻿@model GrantsViewModel
 
 <div class="grants">
-    <div class="row page-header">
-        <div class="col-sm-10">
-            <h1>
+    <div class="row grants-header">
+        <div class="col-sm-10 offset-sm-1">
+            <h1 class="title">
                 Client Application Access
             </h1>
-            <div>Below is the list of applications you have given access to and the names of the resources they have access to.</div>
+            <div class="description">Below is the list of applications you have given access to and the names of the resources they have access to.</div>
         </div>
     </div>
 
     @if (Model.Grants.Any() == false)
     {
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-8 offset-sm-2">
                 <div class="alert alert-info">
                     You have not given access to any applications
                 </div>
@@ -22,58 +22,52 @@
     }
     else
     {
-        foreach (var grant in Model.Grants)
-        {
-            <div class="row grant">
-                <div class="col-sm-2">
-                    @if (grant.ClientLogoUrl != null)
-                    {
-                        <img src="@grant.ClientLogoUrl">
-                    }
-                </div>
-                <div class="col-sm-8">
-                    <div class="clientname">@grant.ClientName</div>
-                    <div>
-                        <span class="created">Created:</span> @grant.Created.ToString("yyyy-MM-dd")
-                    </div>
-                    @if (grant.Expires.HasValue)
-                    {
-                        <div>
-                            <span class="expires">Expires:</span> @grant.Expires.Value.ToString("yyyy-MM-dd")
+        <div class="row">
+            @foreach (var grant in Model.Grants)
+            {
+                <div class="card grant-card col-sm-8 offset-sm-2">
+                    <div class="card-body">
+                        <h5 class="card-title">@grant.ClientName</h5>
+                        <div class="card-text">
+                            <span class="text-muted">Created:</span> @grant.Created.ToString("yyyy-MM-dd")
                         </div>
-                    }
-                    @if (grant.IdentityGrantNames.Any())
-                    {
-                        <div>
-                            <div class="granttype">Identity Grants</div>
-                            <ul>
-                                @foreach (var name in grant.IdentityGrantNames)
+                        @if (grant.Expires.HasValue)
                         {
-                                    <li>@name</li>
+                            <div class="card-text">
+                                <span class="text-muted">Expires:</span> @grant.Expires.Value.ToString("yyyy-MM-dd")
+                            </div>
+                        }
+                        @if (grant.IdentityGrantNames.Any())
+                        {
+                            <div class="card-subtitle">
+                                Identity Grants
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                @foreach (var name in grant.IdentityGrantNames)
+                                {
+                                    <li class="list-group-item">@name</li>
                                 }
                             </ul>
-                        </div>
-                    }
-                    @if (grant.ApiGrantNames.Any())
-                    {
-                        <div>
-                            <div class="granttype">API Grants</div>
-                            <ul>
+                        }
+                        @if (grant.ApiGrantNames.Any())
+                        {
+                            <div class="card-subtitle">
+                                API Grants
+                            </div>
+                            <ul class="list-group list-group-flush">
                                 @foreach (var name in grant.ApiGrantNames)
                                 {
-                                    <li>@name</li>
+                                    <li class="list-group-item">@name</li>
                                 }
                             </ul>
-                        </div>
-                    }
+                        }
+                        <form asp-action="Revoke" class="card-btn">
+                            <input type="hidden" name="clientId" value="@grant.ClientId">
+                            <button class="btn btn-danger">Revoke Access</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="col-sm-2">
-                    <form asp-action="Revoke">
-                        <input type="hidden" name="clientId" value="@grant.ClientId">
-                        <button class="btn btn-danger">Revoke Access</button>
-                    </form>
-                </div>
-            </div>
-        }
+            }
+        </div>
     }
 </div>

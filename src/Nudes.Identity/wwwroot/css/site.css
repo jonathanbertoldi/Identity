@@ -90,20 +90,20 @@
     padding-top: 48px;
 }
 
-.forgot-password-page > .title {
-    text-align: center;
-    color: white;
-}
+    .forgot-password-page > .title {
+        text-align: center;
+        color: white;
+    }
 
 .reset-password-page {
     width: 100%;
     padding-top: 48px;
 }
 
-.reset-password-page > .title {
-    text-align: center;
-    color: white;
-}
+    .reset-password-page > .title {
+        text-align: center;
+        color: white;
+    }
 
 .navbar-header {
     position: relative;
@@ -157,15 +157,41 @@
     padding-left: 16px;
 }
 
-.grants .page-header {
+.card-subtitle {
+    text-align: center;
+    border: 0;
+    background-color: #F2F2F2;
+    font-weight: 600;
+    line-height: 30px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.list-group-item:last-child {
+    border-bottom: 0;
+}
+
+.grants {
+    width: 100%;
+    padding-top: 48px
+}
+
+.grant-card {
+    padding: 0;
+}
+
+.card-btn {
+    margin-top: 12px;
+}
+
+.grants .grants-header {
+    color: white;
     margin-bottom: 10px;
 }
 
-.grants .grant {
-    margin-top: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid lightgray;
-}
+    .grants .title, .grants .description {
+        text-align: center;
+    }
 
     .grants .grant img {
         width: 100px;
